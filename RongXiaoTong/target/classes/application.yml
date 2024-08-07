@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rongxiaotong?serverTimezone=GMT%2B8&useUnicode=true&characterEncodeing=UTF-8&useSSL=false
     username: root
-    password: zq0814
+    password: 0.0lu0.0
   jackson:
     time-zone: GMT+8
   redis:
@@ -18,13 +18,14 @@ spring:
       max-request-size: 500MB
   application:
     name: uploadService8007
-  resources:
-    static-locations: file:d:/zq/file/order,file:d:/zq/file/avatar,file:d:/zq/file/video
   mvc:
     static-path-pattern: /file/**
   devtools:
     restart:
       enabled: true
+  web:
+    resources:
+      static-locations: file:d:/zq/file/order,file:d:/zq/file/avatar,file:d:/zq/file/video
 application:
     upload-path: d:/zq/file
 #mybatis配置
