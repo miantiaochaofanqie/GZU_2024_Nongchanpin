@@ -26,7 +26,7 @@
     update_time
   </sql>
   <select id="selectByFinance" parameterType="com.qst.crop.entity.Finance" resultMap="BaseResultMap">
-    select 
+    select
     *
     from tb_finance
     <where>
@@ -49,7 +49,7 @@
 <!--    </select>-->
   <select id="selectIntentionByName" parameterType="java.lang.String" resultMap="IntentionResultMap">
     SELECT real_name,address,amount,application,item,repayment_period,area,phone
-    FROM tb_financing_intention WHERE user_name = #{name}
+    FROM tb_financing_intention WHERE user_name = 'wy'
   </select>
   <select id="selectAvatarByName" resultType="java.lang.String">
     SELECT avatar FROM tb_user WHERE user_name = #{userName}
@@ -85,56 +85,118 @@
   <select id="selectNameByAuth" resultType="java.lang.String">
     select authorization from tb_user where user_name = #{name}
   </select>
-    <select id="selectAllRecommend" resultType="com.qst.crop.entity.Recommend">
-      select tb.real_name,tb.address,tb.item,tb.phone,amount,area,avatar,num
-      from
-        (
-          select tb1.real_name,tb1.address,tb1.item,tb1.phone,tb1.amount,tb1.area,(@i:=@i+1) AS num ,avatar from tb_financing_intention AS tb1 INNER JOIN tb_user ON tb1.user_name=tb_user.user_name,(SELECT @i:=0) AS itable
-          where SUBSTRING(tb1.address,(LOCATE('省',tb1.address)+1),(LOCATE('市',tb1.address)))=
-                (select  SUBSTRING(address,(LOCATE('省',address)+1),(LOCATE('市',address))) from tb_financing_intention where user_name=#{name})
-            and tb1.user_name!=#{name}
-            and tb1.item like (select item from tb_financing_intention where user_name=#{name})
+  <select id="selectAllRecommend" resultType="com.qst.crop.entity.Recommend">
+    SELECT
+      tb.real_name,
+      MAX(tb.address) AS address,
+      MAX(tb.item) AS item,
+      tb.phone,
+      MAX(tb.amount) AS amount,
+      MAX(tb.area) AS area,
+      MAX(tb.avatar) AS avatar,
+      MAX(tb.num) AS num
+    FROM (
+           SELECT
+             tb1.real_name,
+             tb1.address,
+             tb1.item,
+             tb1.phone,
+             tb1.amount,
+             tb1.area,
+             (@i := @i + 1) AS num,
+             tb_user.avatar
+           FROM tb_financing_intention AS tb1
+                  INNER JOIN tb_user ON tb1.user_name = tb_user.user_name,
+                (SELECT @i := 0) AS itable
+           WHERE SUBSTRING(tb1.address, (LOCATE('省', tb1.address) + 1), (LOCATE('市', tb1.address))) =
+                 (SELECT SUBSTRING(address, (LOCATE('省', address) + 1), (LOCATE('市', address)))
+                  FROM tb_financing_intention WHERE user_name = #{name})
+             AND tb1.user_name != #{name}
+             AND tb1.item LIKE (SELECT item FROM tb_financing_intention WHERE user_name = #{name})
 
+           UNION ALL
 
-          union all
-          select tb1.real_name,tb1.address,tb1.item,tb1.phone,tb1.amount,tb1.area,(@i:=@i+1) as num,avatar from tb_financing_intention AS tb1 INNER JOIN tb_user ON tb1.user_name=tb_user.user_name
-          where SUBSTRING(tb1.address,(LOCATE('省',tb1.address)+1),(LOCATE('市',tb1.address)))=
-              (select  SUBSTRING(address,(LOCATE('省',address)+1),(LOCATE('市',address))) from tb_financing_intention where user_name=#{name})
-            and tb1.user_name!=#{name}
-            and tb1.item not like (select item from tb_financing_intention where user_name=#{name})
+           SELECT
+             tb1.real_name,
+             tb1.address,
+             tb1.item,
+             tb1.phone,
+             tb1.amount,
+             tb1.area,
+             (@i := @i + 1) AS num,
+             tb_user.avatar
+           FROM tb_financing_intention AS tb1
+                  INNER JOIN tb_user ON tb1.user_name = tb_user.user_name
+           WHERE SUBSTRING(tb1.address, (LOCATE('省', tb1.address) + 1), (LOCATE('市', tb1.address))) =
+                 (SELECT SUBSTRING(address, (LOCATE('省', address) + 1), (LOCATE('市', address)))
+                  FROM tb_financing_intention WHERE user_name = #{name})
+             AND tb1.user_name != #{name}
+             AND tb1.item NOT LIKE (SELECT item FROM tb_financing_intention WHERE user_name = #{name})
 
+           UNION ALL
 
-          union all
-          select tb1.real_name,tb1.address,tb1.item,tb1.phone,tb1.amount,tb1.area,(@i:=@i+1) as num,avatar  from tb_financing_intention AS tb1 INNER JOIN tb_user ON tb1.user_name=tb_user.user_name
-          where SUBSTRING(tb1.address,(LOCATE('省',tb1.address)+1),(LOCATE('市',tb1.address)))!=
-              (select  SUBSTRING(address,(LOCATE('省',address)+1),(LOCATE('市',address))) from tb_financing_intention where user_name=#{name})
-            and tb1.user_name!=#{name}
-            and tb1.item like (select item from tb_financing_intention where user_name=#{name})
+           SELECT
+             tb1.real_name,
+             tb1.address,
+             tb1.item,
+             tb1.phone,
+             tb1.amount,
+             tb1.area,
+             (@i := @i + 1) AS num,
+             tb_user.avatar
+           FROM tb_financing_intention AS tb1
+                  INNER JOIN tb_user ON tb1.user_name = tb_user.user_name
+           WHERE SUBSTRING(tb1.address, (LOCATE('省', tb1.address) + 1), (LOCATE('市', tb1.address))) !=
+                 (SELECT SUBSTRING(address, (LOCATE('省', address) + 1), (LOCATE('市', address)))
+                  FROM tb_financing_intention WHERE user_name = #{name})
+             AND tb1.user_name != #{name}
+             AND tb1.item LIKE (SELECT item FROM tb_financing_intention WHERE user_name = #{name})
 
+           UNION ALL
 
-          union all
-          select  tb2.real_name,tb2.address,(select item from tb_financing_intention where user_name=#{name}) as item,tb2.phone,-1 as amount,-1 as area,(@i:=@i+1) as num,tb2.avatar
-          from tb_order tb1 inner join tb_user tb2 on tb1.own_name=tb2.user_name  where tb1.type='goods'
-                                                                                    and SUBSTRING(tb2.address,(LOCATE('省',tb2.address)+1),(LOCATE('市',tb2.address)))=(select  SUBSTRING(address,(LOCATE('省',address)+1),(LOCATE('市',address)))
-            from tb_financing_intention where user_name=#{name})
-                                                                                    and tb2.user_name!=#{name}
-                                                                                    and LOCATE((select item from tb_financing_intention where user_name=#{name}),title)!=0
+           SELECT
+             tb2.real_name,
+             tb2.address,
+             (SELECT item FROM tb_financing_intention WHERE user_name = #{name}) AS item,
+             tb2.phone,
+             -1 AS amount,
+             -1 AS area,
+             (@i := @i + 1) AS num,
+             tb2.avatar
+           FROM tb_order tb1
+                  INNER JOIN tb_user tb2 ON tb1.own_name = tb2.user_name
+           WHERE tb1.type = 'goods'
+             AND SUBSTRING(tb2.address, (LOCATE('省', tb2.address) + 1), (LOCATE('市', tb2.address))) =
+                 (SELECT SUBSTRING(address, (LOCATE('省', address) + 1), (LOCATE('市', address)))
+                  FROM tb_financing_intention WHERE user_name = #{name})
+             AND tb2.user_name != #{name}
+             AND LOCATE((SELECT item FROM tb_financing_intention WHERE user_name = #{name}), tb1.title) != 0
 
+           UNION ALL
 
-          union all
-          select  tb2.real_name,tb2.address,tb1.title as item,tb2.phone ,-1 as amount,-1 as area,(@i:=@i+1) as num,tb2.avatar
-          from tb_order tb1 inner join tb_user tb2 on tb1.own_name=tb2.user_name  where tb1.type='goods'
-                                                                                    and SUBSTRING(tb2.address,(LOCATE('省',tb2.address)+1),(LOCATE('市',tb2.address)))=(select  SUBSTRING(address,(LOCATE('省',address)+1),(LOCATE('市',address))) from tb_financing_intention where user_name=#{name})
-                                                                                    and tb2.user_name!=#{name}
-                                                                                    and LOCATE((select item from tb_financing_intention where user_name=#{name}),title)=0
+           SELECT
+             tb2.real_name,
+             tb2.address,
+             tb1.title AS item,
+             tb2.phone,
+             -1 AS amount,
+             -1 AS area,
+             (@i := @i + 1) AS num,
+             tb2.avatar
+           FROM tb_order tb1
+                  INNER JOIN tb_user tb2 ON tb1.own_name = tb2.user_name
+           WHERE tb1.type = 'goods'
+             AND SUBSTRING(tb2.address, (LOCATE('省', tb2.address) + 1), (LOCATE('市', tb2.address))) =
+                 (SELECT SUBSTRING(address, (LOCATE('省', address) + 1), (LOCATE('市', address)))
+                  FROM tb_financing_intention WHERE user_name = #{name})
+             AND tb2.user_name != #{name}
+             AND LOCATE((SELECT item FROM tb_financing_intention WHERE user_name = #{name}), tb1.title) = 0
+         ) tb
+    GROUP BY tb.real_name, tb.phone
+    ORDER BY MAX(tb.num) ASC
+    LIMIT 0, 10;
+  </select>
 
-        ) tb
-      group by real_name,phone
-      order by num asc
-        LIMIT 0,10
-
-
-    </select>
   <select id="selectWithNoneIntention" resultType="com.qst.crop.entity.Recommend">
     select user_name,real_name,address,phone,title as item,sfn1,sfn2,(@i:=@i+1) as num ,-1 as area,-1 as amount,t1.avatar
     from (select tbl2.avatar,tbl2.user_name,tbl2.real_name,tbl1.title,tbl2.address,tbl2.phone,sfn_GetSimilar_Rate(tbl1.title,tbl2.title) as sfn1,sfn_GetSimilar_Rate(tbl2.title,tbl1.title) as sfn2

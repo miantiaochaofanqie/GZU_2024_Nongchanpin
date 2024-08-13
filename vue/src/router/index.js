@@ -42,6 +42,7 @@ import Financing from '../views/FinancePage/Financing'
 import SmartMatch from '../views/FinancePage/SmartMatch'
 import FinancingDetails from '../views/FinancePage/FinancingDetails'
 import userGood from '../views/goodsManager.vue'
+import Report from "../views/ReportPage/Report.vue";
 import goodsManager from "../views/goodsManager";
 
 
@@ -67,6 +68,10 @@ const routes = [
       {
         path: '',
         redirect: 'front'
+      },
+      {
+        path: 'report',
+        component: Report
       },
       {
         path: 'front',

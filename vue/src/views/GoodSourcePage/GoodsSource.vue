@@ -73,6 +73,7 @@
 
 <script>
 import {addOrderToCart} from "../../api/cart";
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -97,24 +98,39 @@ export default {
       this.searchValue = val
       this.handleSearch()
     },
-    addShopcartClick(val) {
-      addOrderToCart({
-        order_id: val,
-      })
-          .then((res) => {
-            console.log(res);
-            if (res.flag == true) {
-              alert(res.message);
-            } else {
-              alert(res.message);
-            }
+        addShopcartClick(val) {
+          addOrderToCart({
+            order_id: val,
           })
-          .catch((err) => {
-            alert("添加失败,请先登录");
-          });
-    },
-  },
-};
+              .then((res) => {
+                console.log(res);
+                if (res.flag === true) {
+                  Swal.fire({
+                    title: '提示',
+                    text: res.message,
+                    icon: 'success', // 成功图标
+                    confirmButtonText: '确定'
+                  });
+                } else {
+                  Swal.fire({
+                    title: '提示',
+                    text: res.message,
+                    icon: 'error', // 错误图标
+                    confirmButtonText: '确定'
+                  });
+                }
+              })
+              .catch((err) => {
+                Swal.fire({
+                  title: '错误',
+                  text: "添加失败,请先登录",
+                  icon: 'error', // 错误图标
+                  confirmButtonText: '确定'
+                });
+              });
+        },
+      },
+  };
 </script>
 
 <style lang="less" scoped>

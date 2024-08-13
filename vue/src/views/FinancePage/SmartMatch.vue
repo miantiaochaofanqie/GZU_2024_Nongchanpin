@@ -39,7 +39,7 @@ export default {
     getAllRecommned(){
       selectRecommned().then(res=>{
         if(res.flag==true){
-console.log('ressss',res)
+        console.log('ressss',res)
         this.allRecommendData = res.data
         }else{
            this.$message.error('您未登录，请先登录')

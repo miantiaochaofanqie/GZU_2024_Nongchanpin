@@ -8,13 +8,13 @@
 
     <div class="bottom-menu-container" >
       <div class="bottom-menu-box el-icon-location">
-        地址: 山东大学软件园校区
+        地址: 贵州大学东校区
       </div>
       <div class="bottom-menu-box el-icon-phone">
-        联系电话: 13233138362
+        联系电话: 15731066755
       </div>
       <div class="bottom-menu-box el-icon-s-comment">
-        邮箱: 1837879652@qq.com
+        邮箱: 2422745544@qq.com
       </div>
 
     </div>
@@ -44,14 +44,14 @@ export default {
 <style lang="less" scoped>
 
 .bottom-menu-container{
-  background-color: #545C64;
-  height: 200px;
+  background-color: #4ab344;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   .bottom-menu-box{
     width: 280px;
-    color: #ffbc49;
+    color: #ffffff;
     font-size:20px;
     margin: 0px 80px;
     text-align: center;

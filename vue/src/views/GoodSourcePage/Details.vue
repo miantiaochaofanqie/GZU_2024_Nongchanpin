@@ -40,6 +40,7 @@ import { addOrderToCart } from "../../api/cart";
 import { selectOrderById } from "../../api/order";
 import ChangeMessage from "../../components/ChangeMessage.vue";
 import { selectUserByUsername } from "../../api/user";
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -88,9 +89,19 @@ export default {
         .then((res) => {
           console.log(res);
           if (res.flag == true) {
-            alert(res.message);
+            Swal.fire({
+              title: '提示',
+              text: res.message,
+              icon: 'info', // 可选值 'success', 'warning', 'error'
+              confirmButtonText: '确定'
+            });
           } else {
-            alert(res.message);
+            Swal.fire({
+              title: '提示',
+              text: res.message,
+              icon: 'info', // 可选值 'success', 'warning', 'error'
+              confirmButtonText: '确定'
+            });
           }
         })
         .catch((err) => {

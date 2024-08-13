@@ -2,21 +2,18 @@
   <div class="questions-container">
     <Subtitle subtitle="常见问题" description="大家都在问的问题哦~"  style="margin-top:100px;"/>
     <div class="questions">
-      <el-row :gutter="80">
-        <el-col :span="8"  >
-          <el-card shadow="always" class="card" @click="handleTopicDetail('苹果果树种植方法')"> 苹果果树种植方法?</el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always" class="card" @click="handleTopicDetail('苹果果树种植方法')"> 新疆哈密瓜甜度控制? </el-card>
-        </el-col>
-        <el-col :span="8">
-          <el-card shadow="always" class="card" @click="handleTopicDetail('苹果果树种植方法')"> 玉米苗灌溉? </el-card>
-        </el-col>
-      </el-row>
-    </div>
-
+      <el-card
+          v-for="(item,index) in cardList" :key="index"
+          class="card"
+          :style="{ backgroundImage: 'url(' + require('@/assets/page5/' + item.img) + ')' }"
+          @click="handleTopicDetail('苹果果树种植方法')"
+      >
+        <div class="card-content">
+          <span>{{ item.title }}</span>
+        </div>
+      </el-card>
   </div>
-
+  </div>
 </template>
 
 <script>
@@ -28,6 +25,16 @@ export default {
   components:{
     Subtitle,
 
+  },
+  data() {
+    return {
+      cardList: [
+        { id: 0, title: "苹果果树种植方法", img:"apple.png" },
+        { id: 1, title: "新疆哈密瓜甜度控制", img:"melon.png"},
+        { id: 2, title: "玉米苗灌溉", img: "corn.png" }
+      ],
+      searchValue: ""
+    };
   },
   methods:{
     detailsClick(item) {
@@ -60,18 +67,32 @@ export default {
 .questions{
   width: 100%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  padding-left: 15%;
+  padding-right: 15%;
+  gap:5%;
+  flex-wrap: nowrap;
 }
 .card{
   border-radius: 5px;
   width: 300px;
   height: 200px;
+  cursor: pointer;
   display: flex;
+  background-size:100% 100% ;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   font-size: 20px;
   font-family: 鸿蒙字体Regular;
+}
+.card-content{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f1f1f1;
 }
 
 ::v-deep .el-card{

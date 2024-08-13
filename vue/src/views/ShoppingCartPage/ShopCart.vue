@@ -93,7 +93,7 @@ export default {
           .then((res) => {
             this.$store.commit("updatePaymentInfo", res);
             // 打开新页面
-            window.open(res.data);
+            //window.open(res.data);
             this.reload();
 
           })

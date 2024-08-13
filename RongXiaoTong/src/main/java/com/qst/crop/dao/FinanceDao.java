@@ -5,9 +5,11 @@ import com.qst.crop.entity.Finance;
 import com.qst.crop.entity.Intention;
 import com.qst.crop.entity.Recommend;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+@Repository
 
 public interface FinanceDao {
 

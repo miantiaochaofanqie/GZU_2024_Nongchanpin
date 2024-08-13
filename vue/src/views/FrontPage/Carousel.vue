@@ -15,6 +15,14 @@
         <div style="margin-left:100px;margin-top:40px;color: #666666;font: 15px 微软雅黑;">TO PROVIDE YOU WITH QUALITY PRODUCTSAND</div>
       </div>
     </el-carousel-item>
+    <el-carousel-item >
+      <img src="../../assets/page1/Carouselimages/carousel3.png" style="height: 100%;"/>
+      <div class="carousel-title3">
+        <div style="margin-left:78px;background-color: #F07C0A;color:white;height: 39px;width: 275px;font: 18px 思源黑体heavy;display:flex;align-items: center;justify-content: center">创绿色天地 保健康人生</div>
+        <div style="margin-left:100px;margin-top:10px;color: #0E9821;font: 53px 思源黑体heavy;width: 494px;height: 116px">让您体验丰收的喜悦与美好的生活</div>
+        <div style="margin-left:100px;margin-top:40px;color: #666666;font: 15px 微软雅黑;">TO PROVIDE YOU WITH QUALITY PRODUCTSAND</div>
+      </div>
+    </el-carousel-item>
 
   </el-carousel>
 </template>
@@ -91,6 +99,15 @@ export default {
 }
 
 .carousel-title2{
+  position: absolute;
+  top: 25%;
+  left:15%;
+  height: 294px;
+  width: 671px;
+  padding-top: 27px;
+  background: url("../../assets/page1/fontback2.png");
+}
+.carousel-title3{
   position: absolute;
   top: 25%;
   left:15%;

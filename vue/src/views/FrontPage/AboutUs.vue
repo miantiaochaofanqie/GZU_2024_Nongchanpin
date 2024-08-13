@@ -14,8 +14,8 @@
         </el-col>
         <el-col :span="14">
           <div class="content">
-            <h3 style="text-indent:30px;color: #4ab344">项目介绍：</h3>
-            <p style="text-indent: 2em;">融销通是一款基于数字经济的农产品融销一体平台</p>
+            <h3 style="text-indent:2px;color: #4ab344">项目介绍：</h3>
+            <p style="text-indent: 2em;">农汇通是一款基于数字经济的农产品融销一体平台</p>
             <p style="text-indent: 2em;">从用户的角度出发，能够很好的支持农户进行产销购入等活动：针对性性强，使用简便，农户进行买卖商品，联系客户时，操作简单易于理解。将农产品求购与货源同
               时展出，提高了成功率。长此以往将形成一个良性循环。</p>
             <p style="text-indent: 2em">融销通支持农业专家进行知识分享，解惑答疑等工作，农户不仅在网站平台上进行商品的买卖，如果遇到有关问题，可以
@@ -54,9 +54,10 @@ export default {
 
 .title{
   background-color: #4ab344;
-  width:387px;
-  height:460px;
+  width:350px;
+  height:400px;
   padding: 140px 0px;
+  margin-bottom: 40px;
   div{
     font-weight: 500;
     font-family: 鸿蒙字体Regular;
@@ -64,9 +65,6 @@ export default {
     color: white;
   }
 }
-
-
-
 
 
 .content{

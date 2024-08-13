@@ -38,7 +38,6 @@ public class PurchaseServiceImpl implements PurchaseService {
         //查询
         List<MyPurchase> purchases = purchaseDao.selectByPurchase(name);
         System.out.println(purchases);
-
         return purchases;
     }
 

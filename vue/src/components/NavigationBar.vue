@@ -3,28 +3,27 @@
     <span class="initiator">
       <div class="logo-content">
         <div style="display:flex;flex-direction:row;justify-content:flex-start;align-items:center;height: 90px">
-          <span class="logo-text" style="color: #4ab344;display: inline-block;margin-left: -1px">农产品</span>
-          <span class="logo-text" style="color: #9e9d9d;display: inline-block;margin-left: -1px">融销一体平台</span>
-          <img src="../assets/img/logo.png" style="height:60px;margin-left: 500px" alt="" />
-          <span class="logo-text" style="color: #4ab344;display: inline-block;">融销通</span>
+          <img src="../assets/img/logo.png" style="height:85px;margin-left: -35px" alt="" />
+          <span class="logo-text" style="color: #4ab344;display: inline-block;margin-left: -1px;margin-top: 20px;">农产品</span>
+          <span class="logo-text" style="color: #9e9d9d;display: inline-block;margin-left: -1px;margin-top: 20px;">融销一体平台</span>
         </div>
       </div>
-
     </span>
 
     <div class="menu-content" v-cloak>
       <el-menu
-        :default-active="$store.state.activeIndex"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="#4ab344"
-        text-color="#fff"
-        active-text-color="#fff"
-        id="menu">
+          :default-active="$store.state.activeIndex"
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#4ab344"
+          text-color="#fff"
+          active-text-color="#fff"
+          id="menu">
         <el-menu-item index="1" class="item" @click="frontBtn">首页</el-menu-item>
         <el-menu-item index="2" class="item" @click="goodsBtn">商品货源</el-menu-item>
         <el-menu-item index="3" class="item" @click="purchaseBtn">求购需求</el-menu-item>
         <el-menu-item index="4" class="item" @click="knowledgesBtn">农业知识</el-menu-item>
+        <el-menu-item index="9" class="item" @click="reportBtn">数据报表</el-menu-item> <!-- New Data Report Menu Item -->
         <el-menu-item index="5" class="item" @click="guideBtn">专家指导</el-menu-item>
         <el-menu-item index="6" class="item" @click="shopCartBtn">购物车</el-menu-item>
         <el-submenu index="7">
@@ -33,8 +32,8 @@
           <el-menu-item index="7-2" @click.native="financingBtn">融资申请</el-menu-item>
         </el-submenu>
         <div class="userin" v-if="$store.state.loginUserNickname == ''">
-            <span @click="Login" class="login">登录</span> |
-            <span @click="Register" class="register">注册</span>
+          <span @click="Login" class="login">登录</span> |
+          <span @click="Register" class="register">注册</span>
         </div>
         <el-submenu index="8" v-else>
           <template slot="title">设置</template>
@@ -47,6 +46,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 let Base64 = require("js-base64");
@@ -89,6 +89,9 @@ export default {
     },
     knowledgesBtn() {
       this.$router.push("/home/knowledge").catch((err) => err);
+    },
+    reportBtn() {  // Method to navigate to the Data Report page
+      this.$router.push("/home/report").catch((err) => err);
     },
     guideBtn() {
       this.$router.push("/home/guide").catch((err) => err);
