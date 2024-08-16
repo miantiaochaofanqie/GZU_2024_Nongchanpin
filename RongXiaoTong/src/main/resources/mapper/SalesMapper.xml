@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.crop.dao.SalesDao">
+<select id="getSalesSummaryByApplication" resultType="map">
+    SELECT
+        o.title,
+        SUM(pd.count) AS total_counts,
+        SUM(pd.sum_price) AS total_price
+    FROM
+        tb_purchase_detail pd
+            JOIN
+        tb_order o ON pd.order_id = o.order_id
+    GROUP BY
+        o.title;
+</select>
+</mapper>

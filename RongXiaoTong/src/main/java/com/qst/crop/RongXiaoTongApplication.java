@@ -9,6 +9,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 
 
+
 @SpringBootApplication
 @MapperScan(basePackages = "com.qst.crop.dao")
 

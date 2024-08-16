@@ -49,7 +49,7 @@
 <!--    </select>-->
   <select id="selectIntentionByName" parameterType="java.lang.String" resultMap="IntentionResultMap">
     SELECT real_name,address,amount,application,item,repayment_period,area,phone
-    FROM tb_financing_intention WHERE user_name = 'wy'
+    FROM tb_financing_intention WHERE user_name = #{name}
   </select>
   <select id="selectAvatarByName" resultType="java.lang.String">
     SELECT avatar FROM tb_user WHERE user_name = #{userName}

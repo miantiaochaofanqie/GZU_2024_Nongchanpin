@@ -9,7 +9,9 @@ import './less/reset.less'
 import '@/assets/global.css'
 import '@/assets/font/font.css'
 import preventMultiClick from './utils/preventMultiClick';
+import * as echarts from 'echarts';
 
+Vue.prototype.$echarts = echarts;
 Vue.use(preventMultiClick)
 Vue.config.productionTip = false
 Vue.prototype.axios = axios;
